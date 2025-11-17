@@ -31,59 +31,102 @@ export default function ContactForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4 max-w-md">
-      <div>
-        <label htmlFor="name" className="block mb-2 font-medium">
-          Nom
-        </label>
-        <input
-          id="name"
-          type="text"
-          value={name} // La valeur est contrôlée par l'état React
-          onChange={(e) => setName(e.target.value)} // Met à jour l'état quand l'utilisateur tape
-          className="w-full px-4 py-2 border rounded-lg"
-          required
-        />
+    <form onSubmit={handleSubmit} className="max-w-2xl mx-auto w-full">
+      <div className="space-y-6">
+        <div>
+          {/* <label 
+            htmlFor="name" 
+            className="block mb-2 text-sm font-medium text-gray-700 dark:text-gray-300"
+          >
+            Nom
+          </label> */}
+          <input
+            id="name"
+            type="text"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            className="w-full px-4 py-3 border border-gray-200 dark:border-gray-800 rounded-lg 
+                     focus:outline-none focus:ring-2 focus:ring-violet-900 dark:focus:ring-violet-800 
+                     focus:border-transparent bg-white dark:bg-gray-900 
+                     text-black dark:text-white 
+                     transition-all duration-200
+                     placeholder:text-gray-400 dark:placeholder:text-gray-600
+                     shadow-sm hover:shadow-md focus:shadow-lg"
+            placeholder="Votre nom"
+            required
+          />
+        </div>
+
+        <div>
+          {/* <label 
+            htmlFor="email" 
+            className="block mb-2 text-sm font-medium text-gray-700 dark:text-gray-300"
+          >
+            Email
+          </label> */}
+          <input
+            id="email"
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            className="w-full px-4 py-3 border border-gray-200 dark:border-gray-800 rounded-lg 
+                     focus:outline-none focus:ring-2 focus:ring-violet-900 dark:focus:ring-violet-800 
+                     focus:border-transparent bg-white dark:bg-gray-900 
+                     text-black dark:text-white 
+                     transition-all duration-200
+                     placeholder:text-gray-400 dark:placeholder:text-gray-600
+                     shadow-sm hover:shadow-md focus:shadow-lg"
+            placeholder="votre.email@example.com"
+            required
+          />
+        </div>
+
+        <div>
+          {/* <label 
+            htmlFor="message" 
+            className="block mb-2 text-sm font-medium text-gray-700 dark:text-gray-300"
+          >
+            Message
+          </label> */}
+          <textarea
+            id="message"
+            value={message}
+            onChange={(e) => setMessage(e.target.value)}
+            className="w-full px-4 py-3 border border-gray-200 dark:border-gray-800 rounded-lg 
+                     focus:outline-none focus:ring-2 focus:ring-violet-900 dark:focus:ring-violet-800 
+                     focus:border-transparent bg-white dark:bg-gray-900 
+                     text-black dark:text-white 
+                     transition-all duration-200
+                     placeholder:text-gray-400 dark:placeholder:text-gray-600
+                     shadow-sm hover:shadow-md focus:shadow-lg
+                     resize-none"
+            rows={5}
+            placeholder="Votre message..."
+            required
+          />
+        </div>
+
+        <div className="pt-2">
+          <button
+            type="submit"
+            className="w-full px-6 py-3 bg-violet-900 dark:bg-violet-950 text-white 
+                     rounded-lg hover:bg-violet-800 dark:hover:bg-violet-900 
+                     transition-all duration-200 font-medium
+                     shadow-md hover:shadow-lg active:scale-[0.98]
+                     disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            Envoyer
+          </button>
+        </div>
+
+        {submitted && (
+          <div className="mt-4 p-4 bg-violet-50 dark:bg-violet-950/30 border border-violet-200 dark:border-violet-800 rounded-lg">
+            <p className="text-sm text-violet-900 dark:text-violet-300 text-center font-medium">
+              ✓ Message envoyé avec succès !
+            </p>
+          </div>
+        )}
       </div>
-
-      <div>
-        <label htmlFor="email" className="block mb-2 font-medium">
-          Email
-        </label>
-        <input
-          id="email"
-          type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          className="w-full px-4 py-2 border rounded-lg"
-          required
-        />
-      </div>
-
-      <div>
-        <label htmlFor="message" className="block mb-2 font-medium">
-          Message
-        </label>
-        <textarea
-          id="message"
-          value={message}
-          onChange={(e) => setMessage(e.target.value)}
-          className="w-full px-4 py-2 border rounded-lg"
-          rows={4}
-          required
-        />
-      </div>
-
-      <button
-        type="submit"
-        className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
-      >
-        Envoyer
-      </button>
-
-      {submitted && (
-        <p className="text-green-600">Message envoyé avec succès !</p>
-      )}
     </form>
   );
 }

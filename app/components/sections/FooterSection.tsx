@@ -1,9 +1,9 @@
 export default function FooterSection() {
     return (
-        <footer id="footer" className="bg-gray-50 dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800">
-            <div className="max-w-6xl mx-auto px-8 py-12">
+        <footer id="footer" className="w-full border-t border-gray-200 dark:border-gray-800 py-8">
+            <div className="container mx-auto px-4">
                 {/* Phrase inspirante */}
-                <p className="text-center text-gray-600 dark:text-gray-400 mb-8 italic">
+                <p className="text-center text-gray-600 dark:text-gray-400 mb-8 italic text-lg">
                     Vivre, apprendre et progresser jour après jour.
                 </p>
                 
@@ -14,7 +14,7 @@ export default function FooterSection() {
                         href="https://linkedin.com/in/votre-profil"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-gray-700 dark:text-gray-300 hover:text-violet-600 dark:hover:text-violet-400 transition-colors duration-200"
+                        className="text-gray-700 dark:text-gray-300 hover:text-violet-900 dark:hover:text-violet-400 transition-colors duration-200"
                         aria-label="LinkedIn"
                     >
                         <svg
@@ -32,7 +32,7 @@ export default function FooterSection() {
                         href="https://github.com/votre-username"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-gray-700 dark:text-gray-300 hover:text-violet-600 dark:hover:text-violet-400 transition-colors duration-200"
+                        className="text-gray-700 dark:text-gray-300 hover:text-violet-900 dark:hover:text-violet-400 transition-colors duration-200"
                         aria-label="GitHub"
                     >
                         <svg
@@ -48,7 +48,7 @@ export default function FooterSection() {
                     {/* Email */}
                     <a
                         href="mailto:votre.email@example.com"
-                        className="text-gray-700 dark:text-gray-300 hover:text-violet-600 dark:hover:text-violet-400 transition-colors duration-200"
+                        className="text-gray-700 dark:text-gray-300 hover:text-violet-900 dark:hover:text-violet-400 transition-colors duration-200"
                         aria-label="Email"
                     >
                         <svg
@@ -69,7 +69,7 @@ export default function FooterSection() {
                 </div>
 
                 {/* Copyright */}
-                <div className="text-center text-sm text-gray-500 dark:text-gray-500">
+                <div className="text-center text-sm text-gray-500 dark:text-gray-400 mt-8">
                     <p>&copy; {new Date().getFullYear()} Samuel. Tous droits réservés.</p>
                 </div>
             </div>
