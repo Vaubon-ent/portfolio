@@ -126,7 +126,7 @@ export default function Navigation() {
                                             : "opacity-0 translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 text-gray-600 dark:text-gray-400"
                                     }`}
                                 >
-                                    {section.label}
+                                    {/* {section.label} */}
                                 </span>
                             </button>
                         </li>
