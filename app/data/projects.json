@@ -1,0 +1,39 @@
+[
+  {
+    "id": 1,
+    "title": "Side web app",
+    "description": "Développement d’une application complémentaire permettant aux restaurateurs dont les caisses enregistreuses ne sont pas compatibles avec TicknCook de saisir manuellement leurs commandes. Cette side app reproduit les fonctionnalités essentielles de l’application principale et assure la transmission des commandes au système TicknCook malgré l’absence d’intégration native.",
+    "technologies": ["Angular", "Node.js", "Express", "PWA"],
+    "image": null,
+    "github": null,
+    "demo": null,
+    "type": "pro",
+    "is_abort": null
+  },
+  {
+    "id": 2,
+    "title": "Dashboard Analytics DeFi",
+    "description": "Tableau de bord interactif pour visualiser et analyser des données en temps réel liées à la DeFi.",
+    "description-plus": "Une application web complète développée pour analyser et simuler des stratégies de trading sur les tokens Pendle Finance (PT - Principal Token et YT - Yield Token). La plateforme permet aux traders DeFi d'identifier des opportunités d'arbitrage, de visualiser les données de marché en temps réel et de backtester des stratégies sans risque financier.",
+    "problématique": "Les traders DeFi manquent d'outils spécialisés pour analyser les opportunités d'arbitrage entre le Base APY (rendement sous-jacent) et l'Implied APY (rendement implicite) des tokens Pendle. Cette plateforme comble ce manque en fournissant une interface complète d'analyse, de simulation et de backtesting.",
+    "technologies": ["React", "Python (Flask)", "SQLite", "Lightweight Charts"],
+    "image": null,
+    "github": "https://github.com/tezcatlypoca/TradingView",
+    "demo": null,
+    "type": "perso",
+    "is_abort": true
+  },
+  {
+    "id": 3,
+    "title": "API RESTful dédié LLM Local",
+    "description": "Système d'API modulaire en Python/Flask pour l'inférence de modèles LLM locaux et la recherche augmentée par génération (RAG). Architecture en trois couches : Base API pour la gestion GPU et l'inférence, Overlay API pour la gestion du contexte et la persistance, et RAG API pour l'indexation et la recherche sémantique de documents.",
+    "description-plus": "Ce projet est une plateforme complète d'inférence LLM locale avec système RAG intégré, conçue avec une architecture modulaire en trois couches distinctes. Chaque couche a une responsabilité spécifique, permettant une séparation claire des préoccupations et une évolutivité optimale.",
+    "technologies": ["React", "Python (Flask)", "SQLite", "Lightweight Charts"],
+    "image": null,
+    "github": "https://github.com/tezcatlypoca/local-llm",
+    "demo": null,
+    "type": "perso",
+    "is_abort": false
+  }
+]
+

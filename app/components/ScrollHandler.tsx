@@ -53,6 +53,46 @@ export default function ScrollHandler() {
             }
 
             const currentSectionIndex = getCurrentSectionIndex();
+            const currentSectionId = sections[currentSectionIndex];
+
+            // Si on est dans la section projets, laisser ProjectSection gérer le scroll
+            if (currentSectionId === "projet") {
+                const projetSection = document.getElementById("projet");
+                if (projetSection) {
+                    const sectionRect = projetSection.getBoundingClientRect();
+                    const isInSection = sectionRect.top <= window.innerHeight / 2 && 
+                                       sectionRect.bottom >= window.innerHeight / 2;
+                    
+                    if (isInSection) {
+                        // Vérifier si on est sur le dernier projet (scroll bas) ou premier projet (scroll haut)
+                        const scrollContainer = projetSection.querySelector('[class*="overflow-x-auto"]') as HTMLElement;
+                        if (scrollContainer) {
+                            const containerWidth = scrollContainer.clientWidth;
+                            const currentScrollLeft = scrollContainer.scrollLeft;
+                            const currentProjectIndex = Math.round(currentScrollLeft / containerWidth);
+                            
+                            // Compter le nombre de projets (approximation basée sur la largeur totale)
+                            const totalWidth = scrollContainer.scrollWidth;
+                            const totalProjects = Math.round(totalWidth / containerWidth);
+                            
+                            // Scroll vers le bas : ne permettre que si on est sur le dernier projet
+                            if (e.deltaY > 50) {
+                                if (currentProjectIndex < totalProjects - 1) {
+                                    // Laisser ProjectSection gérer
+                                    return;
+                                }
+                            }
+                            // Scroll vers le haut : ne permettre que si on est sur le premier projet
+                            else if (e.deltaY < -50) {
+                                if (currentProjectIndex > 0) {
+                                    // Laisser ProjectSection gérer
+                                    return;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
 
             if (e.deltaY > 50) {
                 // Scroll vers le bas

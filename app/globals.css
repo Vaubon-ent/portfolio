@@ -130,3 +130,13 @@ main {
 main::-webkit-scrollbar {
   display: none; /* Chrome, Safari, Edge */
 }
+
+/* Masquer la scrollbar pour les conteneurs de défilement horizontal */
+.scrollbar-hide {
+  -ms-overflow-style: none; /* IE et Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Edge */
+}

@@ -11,7 +11,6 @@ export default function Navigation() {
         { id: "hero", label: "Accueil" },
         { id: "about", label: "À propos" },
         { id: "skills", label: "Compétences" },
-        { id: "projet", label: "Projets" },
         { id: "contact", label: "Contact" },
     ];
 
@@ -102,38 +101,6 @@ export default function Navigation() {
                 </button>
             </div>
 
-            {/* Indicateurs de section (dots) sur le côté droit - Desktop */}
-            <nav className="fixed right-8 top-1/2 -translate-y-1/2 z-50 hidden md:block">
-                <ul className="flex flex-col gap-4">
-                    {sections.map((section) => (
-                        <li key={section.id}>
-                            <button
-                                onClick={() => scrollToSection(section.id)}
-                                className="group relative flex items-center"
-                                aria-label={section.label}
-                            >
-                                <span
-                                    className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                                        activeSection === section.id
-                                            ? "bg-violet-900 dark:bg-violet-400 w-3 h-3"
-                                            : "bg-gray-400 dark:bg-gray-600 group-hover:bg-violet-600 dark:group-hover:bg-violet-500"
-                                    }`}
-                                />
-                                <span
-                                    className={`absolute right-6 whitespace-nowrap text-xs font-medium transition-all duration-300 ${
-                                        activeSection === section.id
-                                            ? "opacity-100 translate-x-0 text-violet-900 dark:text-violet-400"
-                                            : "opacity-0 translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 text-gray-600 dark:text-gray-400"
-                                    }`}
-                                >
-                                    {/* {section.label} */}
-                                </span>
-                            </button>
-                        </li>
-                    ))}
-                </ul>
-            </nav>
-
             {/* Menu mobile - Bouton hamburger */}
             <div className="fixed top-8 right-8 z-50 md:hidden">
                 <button
@@ -182,6 +149,19 @@ export default function Navigation() {
                                 {section.label}
                             </button>
                         ))}
+                        <button
+                            onClick={() => {
+                                scrollToSection("projet");
+                                setIsMobileMenuOpen(false);
+                            }}
+                            className={`text-2xl font-medium transition-colors ${
+                                activeSection === "projet"
+                                    ? "text-violet-900 dark:text-violet-400"
+                                    : "text-gray-700 dark:text-gray-300 hover:text-violet-900 dark:hover:text-violet-400"
+                            }`}
+                        >
+                            Projets
+                        </button>
                     </nav>
                 </div>
             )}
