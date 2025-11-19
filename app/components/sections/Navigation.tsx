@@ -65,6 +65,12 @@ export default function Navigation() {
             }
         });
 
+        // Observer aussi la section projet
+        const projetElement = document.getElementById("projet");
+        if (projetElement) {
+            observer.observe(projetElement);
+        }
+
         return () => {
             main.removeEventListener("scroll", handleScroll);
             observer.disconnect();

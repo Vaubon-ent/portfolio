@@ -15,9 +15,9 @@ export default function Home() {
       <ScrollHandler />
       <main className="relative snap-y snap-mandatory overflow-y-scroll h-screen">
         <HeroSection />
-        <AboutSection />
-        <SkillSection />
         <ProjectSection />
+        <SkillSection />
+        <AboutSection />
         <ContactSection />
       </main>
     </>

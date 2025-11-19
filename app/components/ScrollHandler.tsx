@@ -12,7 +12,7 @@ export default function ScrollHandler() {
         if (!main) return;
 
         mainRef.current = main as HTMLElement;
-        const sections = ["hero", "about", "skills", "projet", "contact"];
+        const sections = ["hero", "projet", "skills", "about", "contact"];
 
         const getCurrentSectionIndex = (): number => {
             const scrollPosition = main.scrollTop + main.clientHeight / 2;

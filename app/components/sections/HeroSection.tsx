@@ -11,7 +11,7 @@ export default function HeroSection() {
                     Je suis un développeur fullstack créatif et passionné par les nouvelles technologies.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-                    <a
+                    {/* <a
                         href="#projet"
                         onClick={(e) => {
                             e.preventDefault();
@@ -20,7 +20,7 @@ export default function HeroSection() {
                         className="px-6 py-3 bg-violet-900 dark:bg-violet-950 text-white rounded-lg hover:bg-violet-800 dark:hover:bg-violet-900 transition-all duration-200 font-medium shadow-md hover:shadow-lg"
                     >
                         Voir mes projets
-                    </a>
+                    </a> */}
                     <a
                         href="#contact"
                         onClick={(e) => {

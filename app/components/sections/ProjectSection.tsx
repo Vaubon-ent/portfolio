@@ -47,6 +47,30 @@ export default function ProjectSection() {
                 total={sortedProjects.length}
                 onItemClick={scrollToItem}
             />
+
+            {/* Flèche pour passer à la section suivante */}
+            <button
+                onClick={() => {
+                    const nextSection = document.getElementById("skills");
+                    if (nextSection) {
+                        nextSection.scrollIntoView({ behavior: "smooth", block: "start" });
+                    }
+                }}
+                className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-20 animate-bounce hover:scale-110 transition-transform duration-200"
+                aria-label="Aller à la section suivante"
+            >
+                <svg
+                    className="w-8 h-8 text-violet-900 dark:text-violet-400"
+                    fill="none"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                >
+                    <path d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+                </svg>
+            </button>
         </section>
     );
 }
