@@ -3,8 +3,21 @@ import { Resend } from "resend";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
+// Vérifier que la clé API est définie
+if (!process.env.RESEND_API_KEY) {
+  console.error("RESEND_API_KEY n'est pas définie dans les variables d'environnement");
+}
+
 export async function POST(request: NextRequest) {
   try {
+    // Vérifier que la clé API est définie
+    if (!process.env.RESEND_API_KEY) {
+      return NextResponse.json(
+        { error: "Configuration serveur incomplète : clé API manquante" },
+        { status: 500 }
+      );
+    }
+
     const body = await request.json();
     const { name, email, message } = body;
 
@@ -28,7 +41,7 @@ export async function POST(request: NextRequest) {
     // Envoyer l'email via Resend
     const { data, error } = await resend.emails.send({
       from: process.env.RESEND_FROM_EMAIL || "Portfolio <onboarding@resend.dev>",
-      to: process.env.RESEND_TO_EMAIL || "votre-email@example.com",
+      to: process.env.MY_MAIL || "mrkimbou21972@gmail.com",
       replyTo: email,
       subject: `Nouveau message de contact depuis le portfolio - ${name}`,
       html: `
@@ -71,9 +84,17 @@ ${message}
     );
   } catch (error) {
     console.error("Erreur API contact:", error);
+    
+    // S'assurer de toujours retourner du JSON valide
+    const errorMessage = error instanceof Error ? error.message : "Erreur serveur";
     return NextResponse.json(
-      { error: "Erreur serveur" },
-      { status: 500 }
+      { error: errorMessage },
+      { 
+        status: 500,
+        headers: {
+          "Content-Type": "application/json",
+        }
+      }
     );
   }
 }

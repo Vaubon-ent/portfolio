@@ -29,6 +29,14 @@ export default function ContactForm() {
         body: JSON.stringify({ name, email, message }),
       });
 
+      // Vérifier le type de contenu avant de parser
+      const contentType = response.headers.get("content-type");
+      if (!contentType || !contentType.includes("application/json")) {
+        const text = await response.text();
+        console.error("Réponse non-JSON reçue:", text);
+        throw new Error("Erreur serveur : réponse invalide");
+      }
+
       const data = await response.json();
 
       if (!response.ok) {
