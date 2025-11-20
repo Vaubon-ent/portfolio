@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import ThemeToggle from "../ui/ThemeToggle";
 
 export default function Navigation() {
     const [activeSection, setActiveSection] = useState("hero");
@@ -107,11 +108,12 @@ export default function Navigation() {
                 </button>
             </div>
 
-            {/* Menu mobile - Bouton hamburger */}
-            <div className="fixed top-8 right-8 z-50 md:hidden">
+            {/* ThemeToggle et Menu mobile - Bouton hamburger */}
+            <div className="fixed top-8 right-8 z-50 flex items-center gap-3">
+                <ThemeToggle />
                 <button
                     onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                    className="w-10 h-10 flex flex-col justify-center items-center gap-1.5"
+                    className="w-10 h-10 flex flex-col justify-center items-center gap-1.5 md:hidden"
                     aria-label="Menu"
                 >
                     <span

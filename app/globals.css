@@ -1,5 +1,8 @@
 @import "tailwindcss";
 
+/* Configuration du dark mode pour Tailwind v4 */
+@custom-variant dark (&:where(.dark, .dark *));
+
 :root {
   --background: #ffffff;
   --foreground: #171717;
@@ -36,11 +39,9 @@
   --font-weight-bold: 700;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+.dark {
+  --background: #0f172a; /* bleu nuit très sombre (slate-900) */
+  --foreground: #f1f5f9; /* slate-100 pour un meilleur contraste */
 }
 
 html {
@@ -55,7 +56,7 @@ html:not(.project-detail-scrollbar)::-webkit-scrollbar {
 
 body {
   overflow: hidden;
-  background: var(--background);
+  background: var(--background) !important;
   color: var(--foreground);
   font-family: var(--font-inter), -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   font-weight: 400;
@@ -63,6 +64,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   scrollbar-width: none; /* Firefox */
+  min-height: 100vh;
 }
 
 body::-webkit-scrollbar {
@@ -175,20 +177,18 @@ html.project-detail-scrollbar::-webkit-scrollbar-thumb:hover {
   background-clip: padding-box;
 }
 
-@media (prefers-color-scheme: dark) {
-  html.project-detail-scrollbar {
-    scrollbar-color: rgb(76, 29, 149) transparent; /* violet-950 pour dark mode */
-  }
+html.dark.project-detail-scrollbar {
+  scrollbar-color: rgb(76, 29, 149) transparent; /* violet-950 pour dark mode */
+}
 
-  html.project-detail-scrollbar::-webkit-scrollbar-thumb {
-    background: rgb(76, 29, 149); /* violet-950 */
-    background-clip: padding-box;
-  }
+html.dark.project-detail-scrollbar::-webkit-scrollbar-thumb {
+  background: rgb(76, 29, 149); /* violet-950 */
+  background-clip: padding-box;
+}
 
-  html.project-detail-scrollbar::-webkit-scrollbar-thumb:hover {
-    background: rgb(88, 28, 135); /* violet-900 au survol */
-    background-clip: padding-box;
-  }
+html.dark.project-detail-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgb(88, 28, 135); /* violet-900 au survol */
+  background-clip: padding-box;
 }
 
 body.project-detail-scrollbar::-webkit-scrollbar {
@@ -213,18 +213,16 @@ body.project-detail-scrollbar::-webkit-scrollbar-thumb:hover {
 }
 
 /* Mode sombre */
-@media (prefers-color-scheme: dark) {
-  body.project-detail-scrollbar {
-    scrollbar-color: rgb(76, 29, 149) transparent; /* violet-950 pour dark mode */
-  }
+html.dark body.project-detail-scrollbar {
+  scrollbar-color: rgb(76, 29, 149) transparent; /* violet-950 pour dark mode */
+}
 
-  body.project-detail-scrollbar::-webkit-scrollbar-thumb {
-    background: rgb(76, 29, 149); /* violet-950 */
-    background-clip: padding-box;
-  }
+html.dark body.project-detail-scrollbar::-webkit-scrollbar-thumb {
+  background: rgb(76, 29, 149); /* violet-950 */
+  background-clip: padding-box;
+}
 
-  body.project-detail-scrollbar::-webkit-scrollbar-thumb:hover {
-    background: rgb(88, 28, 135); /* violet-900 au survol */
-    background-clip: padding-box;
-  }
+html.dark body.project-detail-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgb(88, 28, 135); /* violet-900 au survol */
+  background-clip: padding-box;
 }

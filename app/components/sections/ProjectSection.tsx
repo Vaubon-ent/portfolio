@@ -91,7 +91,7 @@ export default function ProjectSection() {
         <section 
             ref={sectionRef}
             id="projet" 
-            className="relative bg-white/95 dark:bg-black/95 backdrop-blur-sm h-screen snap-start snap-always overflow-hidden z-10"
+            className="relative bg-white/85 dark:bg-slate-900/85 h-screen snap-start snap-always overflow-hidden z-10"
         >
             {/* Conteneur de défilement horizontal */}
             <div

@@ -2,7 +2,7 @@
 
 export default function HeroSection() {
     return (
-        <section id="hero" className="relative bg-white/95 dark:bg-black/95 backdrop-blur-sm h-screen snap-start snap-always flex items-center justify-center z-10">
+        <section id="hero" className="relative bg-white/85 dark:bg-slate-900/85 h-screen snap-start snap-always flex items-center justify-center z-10">
             <div className="container mx-auto px-4 py-24 md:py-32 text-center">
                 <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6 text-black dark:text-white">
                     Développeur fullstack
