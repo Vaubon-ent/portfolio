@@ -1,6 +1,8 @@
 "use client";
 
+import Link from "next/link";
 import type { Project } from "@/app/data/types";
+import { getProjectRoute } from "@/app/utils/projectRoutes";
 
 interface ProjectCardProps {
     project: Project;
@@ -52,9 +54,21 @@ export default function ProjectCard({ project }: ProjectCardProps) {
 
                         {/* Bouton Voir plus */}
                         <div className="pt-4">
-                            <button className="px-6 py-3 bg-violet-900 dark:bg-violet-950 text-white rounded-lg hover:bg-violet-800 dark:hover:bg-violet-900 transition-all duration-200 font-medium">
-                                Voir plus
-                            </button>
+                            {getProjectRoute(project.id) ? (
+                                <Link 
+                                    href={getProjectRoute(project.id)!}
+                                    className="inline-block px-6 py-3 bg-violet-900 dark:bg-violet-950 text-white rounded-lg hover:bg-violet-800 dark:hover:bg-violet-900 transition-all duration-200 font-medium"
+                                >
+                                    Voir plus
+                                </Link>
+                            ) : (
+                                <button 
+                                    disabled
+                                    className="px-6 py-3 bg-gray-400 dark:bg-gray-600 text-white rounded-lg cursor-not-allowed font-medium opacity-50"
+                                >
+                                    Voir plus
+                                </button>
+                            )}
                         </div>
                     </div>
                 </div>

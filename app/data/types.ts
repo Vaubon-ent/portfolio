@@ -2,6 +2,8 @@ export interface Project {
     id: number;
     title: string;
     description: string;
+    "description-plus"?: string;
+    problématique?: string;
     technologies: string[];
     image?: string | null;
     github?: string | null;

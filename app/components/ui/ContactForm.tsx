@@ -10,24 +10,46 @@ export default function ContactForm() {
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
   const [submitted, setSubmitted] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
 
   // Fonction qui s'exécute quand le formulaire est soumis
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault(); // Empêche le rechargement de la page
     
-    // Ici, vous pourriez envoyer les données à une API
-    console.log({ name, email, message });
+    setIsLoading(true);
+    setError("");
     
-    // Mettre à jour l'état pour afficher un message de confirmation
-    setSubmitted(true);
-    
-    // Réinitialiser le formulaire après 3 secondes
-    setTimeout(() => {
-      setSubmitted(false);
-      setName("");
-      setEmail("");
-      setMessage("");
-    }, 3000);
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ name, email, message }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || "Erreur lors de l'envoi du message");
+      }
+
+      // Mettre à jour l'état pour afficher un message de confirmation
+      setSubmitted(true);
+      
+      // Réinitialiser le formulaire après 3 secondes
+      setTimeout(() => {
+        setSubmitted(false);
+        setName("");
+        setEmail("");
+        setMessage("");
+      }, 3000);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Une erreur est survenue");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -109,15 +131,24 @@ export default function ContactForm() {
         <div className="pt-2">
           <button
             type="submit"
+            disabled={isLoading}
             className="w-full px-6 py-3 bg-violet-900 dark:bg-violet-950 text-white 
                      rounded-lg hover:bg-violet-800 dark:hover:bg-violet-900 
                      transition-all duration-200 font-medium
                      shadow-md hover:shadow-lg active:scale-[0.98]
                      disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            Envoyer
+            {isLoading ? "Envoi en cours..." : "Envoyer"}
           </button>
         </div>
+
+        {error && (
+          <div className="mt-4 p-4 bg-red-50 dark:bg-red-950/30 border border-red-200 dark:border-red-800 rounded-lg">
+            <p className="text-sm text-red-900 dark:text-red-300 text-center font-medium">
+              ✗ {error}
+            </p>
+          </div>
+        )}
 
         {submitted && (
           <div className="mt-4 p-4 bg-violet-50 dark:bg-violet-950/30 border border-violet-200 dark:border-violet-800 rounded-lg">

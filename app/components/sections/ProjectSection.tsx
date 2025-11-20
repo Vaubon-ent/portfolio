@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import projectsData from "@/app/data/projects.json";
 import type { Project } from "@/app/data/types";
 import { sortProjects } from "@/app/utils/projectUtils";
@@ -12,6 +12,9 @@ import ProjectMobileIndicator from "@/app/components/ui/ProjectMobileIndicator";
 export default function ProjectSection() {
     // Charger les projets depuis le fichier JSON
     const [projects] = useState<Project[]>(projectsData as Project[]);
+    
+    // État pour masquer le contenu pendant la transition
+    const [isTransitioning, setIsTransitioning] = useState(false);
 
     // Trier les projets : pro en premier, puis perso
     const sortedProjects = sortProjects(projects);
@@ -22,6 +25,68 @@ export default function ProjectSection() {
             totalItems: sortedProjects.length,
         });
 
+    // Flag pour s'assurer que le scroll automatique ne se fait qu'une seule fois
+    const hasScrolledToProject = useRef(false);
+
+    // Détecter le paramètre project dans l'URL et scroller vers le projet correspondant
+    useEffect(() => {
+        // Vérifier si on est côté client
+        if (typeof window === "undefined") return;
+        
+        // Ne faire le scroll automatique qu'une seule fois
+        if (hasScrolledToProject.current) return;
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const projectIdParam = urlParams.get("project");
+        
+        if (projectIdParam) {
+            const projectId = parseInt(projectIdParam, 10);
+            const projectIndex = sortedProjects.findIndex(p => p.id === projectId);
+            
+            if (projectIndex !== -1) {
+                // Marquer comme fait pour éviter les re-déclenchements
+                hasScrolledToProject.current = true;
+                
+                // Masquer le contenu pendant la transition
+                setIsTransitioning(true);
+                
+                // Masquer aussi le main pour éviter de voir la section hero
+                const main = document.querySelector("main");
+                if (main) {
+                    (main as HTMLElement).style.opacity = "0";
+                }
+                
+                // Scroll instantané vers la section projets (sans animation)
+                const section = document.getElementById("projet");
+                if (section) {
+                    section.scrollIntoView({ behavior: "instant", block: "start" });
+                }
+                
+                // Scroll instantané vers le bon projet dans le conteneur horizontal
+                const container = scrollContainerRef.current;
+                if (container) {
+                    const containerWidth = container.clientWidth;
+                    container.scrollLeft = projectIndex * containerWidth;
+                }
+                
+                // Attendre un court instant puis réafficher le contenu
+                setTimeout(() => {
+                    setIsTransitioning(false);
+                    
+                    // Réafficher le main
+                    if (main) {
+                        (main as HTMLElement).style.opacity = "1";
+                    }
+                    
+                    // Supprimer le paramètre de l'URL après le scroll pour éviter les re-déclenchements
+                    const newUrl = new URL(window.location.href);
+                    newUrl.searchParams.delete("project");
+                    window.history.replaceState({}, "", newUrl.toString());
+                }, 150);
+            }
+        }
+    }, [sortedProjects, scrollToItem, scrollContainerRef]);
+
     return (
         <section 
             ref={sectionRef}
@@ -31,7 +96,9 @@ export default function ProjectSection() {
             {/* Conteneur de défilement horizontal */}
             <div
                 ref={scrollContainerRef}
-                className="h-full w-full flex overflow-x-auto scrollbar-hide snap-x snap-mandatory"
+                className={`h-full w-full flex overflow-x-auto scrollbar-hide snap-x snap-mandatory transition-opacity duration-100 ${
+                    isTransitioning ? "opacity-0" : "opacity-100"
+                }`}
             >
                 {sortedProjects.map((project) => (
                     <ProjectCard key={project.id} project={project} />
