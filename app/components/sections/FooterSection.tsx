@@ -1,24 +1,35 @@
+"use client";
+
 export default function FooterSection() {
+    const linkedinUrl = process.env.NEXT_PUBLIC_LINKEDIN_URL;
+    const githubUrl = process.env.NEXT_PUBLIC_GITHUB_URL;
+
+    // Debug: vérifier les valeurs (à retirer en production)
+    if (typeof window !== 'undefined') {
+        console.log('LinkedIn URL:', linkedinUrl);
+        console.log('GitHub URL:', githubUrl);
+    }
+
     return (
         <footer id="footer" className="w-full border-t border-gray-200 dark:border-gray-800 py-8">
             <div className="container mx-auto px-4">
                 {/* Phrase inspirante */}
                 <p className="text-center text-gray-600 dark:text-gray-400 mb-8 italic text-lg">
-                    Vivre, apprendre et progresser jour après jour.
+                    Vivre, apprendre et progresser.
                 </p>
                 
                 {/* Liens réseaux sociaux */}
                 <div className="flex justify-center items-center gap-6 mb-6">
                     {/* LinkedIn */}
                     <a
-                        href="https://linkedin.com/in/votre-profil"
+                        href={linkedinUrl || "#"} 
                         target="_blank"
                         rel="noopener noreferrer"
                         className="text-gray-700 dark:text-gray-300 hover:text-violet-900 dark:hover:text-violet-400 transition-colors duration-200"
                         aria-label="LinkedIn"
                     >
                         <svg
-                            className="w-6 h-6"
+                            className="w-6 h-6" 
                             fill="currentColor"
                             viewBox="0 0 24 24"
                             xmlns="http://www.w3.org/2000/svg"
@@ -29,7 +40,7 @@ export default function FooterSection() {
 
                     {/* GitHub */}
                     <a
-                        href="https://github.com/votre-username"
+                        href={githubUrl || "#"}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="text-gray-700 dark:text-gray-300 hover:text-violet-900 dark:hover:text-violet-400 transition-colors duration-200"
@@ -46,7 +57,7 @@ export default function FooterSection() {
                     </a>
 
                     {/* Email */}
-                    <a
+                    {/* <a
                         href="mailto:votre.email@example.com"
                         className="text-gray-700 dark:text-gray-300 hover:text-violet-900 dark:hover:text-violet-400 transition-colors duration-200"
                         aria-label="Email"
@@ -65,7 +76,7 @@ export default function FooterSection() {
                                 d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
                             />
                         </svg>
-                    </a>
+                    </a> */}
                 </div>
 
                 {/* Copyright */}
