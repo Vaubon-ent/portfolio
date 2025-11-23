@@ -18,6 +18,9 @@ const jetbrainsMono = JetBrains_Mono({
 export const metadata: Metadata = {
   title: "Portfolio - Samuel",
   description: "Portfolio professionnel de Samuel - Développeur",
+  icons: {
+    icon: [],
+  },
 };
 
 export default function RootLayout({
@@ -28,6 +31,7 @@ export default function RootLayout({
   return (
     <html lang="fr" suppressHydrationWarning>
       <head>
+        <link rel="icon" href="data:," />
         <script
           dangerouslySetInnerHTML={{
             __html: `
