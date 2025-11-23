@@ -10,8 +10,9 @@ export default function Navigation() {
 
     const sections = [
         { id: "hero", label: "Accueil" },
-        { id: "about", label: "À propos" },
+        { id: "projet", label: "Projets" },
         { id: "skills", label: "Compétences" },
+        { id: "about", label: "À propos" },
         { id: "contact", label: "Contact" },
     ];
 
@@ -19,16 +20,12 @@ export default function Navigation() {
         const main = document.querySelector("main");
         if (!main) return;
 
-        const handleScroll = () => {
+        // Fonction pour déterminer la section active basée sur le scroll
+        const updateActiveSection = () => {
             const scrollPosition = main.scrollTop + main.clientHeight / 2;
-            const hero = document.getElementById("hero");
-            const heroHeight = hero?.offsetHeight || 0;
-            
-            // Masquer le logo en haut du hero
-            setIsVisible(main.scrollTop < heroHeight - 100);
-
-            // Déterminer la section active
             const sectionIds = sections.map(s => s.id);
+            
+            // Parcourir les sections de bas en haut pour trouver la première qui dépasse le scroll
             for (let i = sectionIds.length - 1; i >= 0; i--) {
                 const section = document.getElementById(sectionIds[i]);
                 if (section) {
@@ -41,40 +38,20 @@ export default function Navigation() {
             }
         };
 
-        main.addEventListener("scroll", handleScroll);
-        handleScroll(); // Appel initial
-        
-        // Observer les changements de section avec IntersectionObserver pour plus de précision
-        const observerOptions = {
-            root: main,
-            rootMargin: "-50% 0px -50% 0px",
-            threshold: 0
+        // Gestion de la visibilité du logo
+        const handleScroll = () => {
+            const hero = document.getElementById("hero");
+            const heroHeight = hero?.offsetHeight || 0;
+            setIsVisible(main.scrollTop < heroHeight - 100);
+            updateActiveSection();
         };
 
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach((entry) => {
-                if (entry.isIntersecting) {
-                    setActiveSection(entry.target.id);
-                }
-            });
-        }, observerOptions);
-
-        sections.forEach((section) => {
-            const element = document.getElementById(section.id);
-            if (element) {
-                observer.observe(element);
-            }
-        });
-
-        // Observer aussi la section projet
-        const projetElement = document.getElementById("projet");
-        if (projetElement) {
-            observer.observe(projetElement);
-        }
+        // Écouter le scroll pour la visibilité du logo et la section active
+        main.addEventListener("scroll", handleScroll, { passive: true });
+        handleScroll(); // Appel initial
 
         return () => {
             main.removeEventListener("scroll", handleScroll);
-            observer.disconnect();
         };
     }, [sections]);
 
@@ -107,6 +84,38 @@ export default function Navigation() {
                     Samuel
                 </button>
             </div>
+
+            {/* Indicateurs de section (dots) sur le côté droit - Desktop */}
+            <nav className="fixed right-8 top-1/2 -translate-y-1/2 z-50 hidden md:block">
+                <ul className="flex flex-col gap-4">
+                    {sections.map((section) => (
+                        <li key={section.id}>
+                            <button
+                                onClick={() => scrollToSection(section.id)}
+                                className="group relative flex items-center"
+                                aria-label={section.label}
+                            >
+                                <span
+                                    className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                                        activeSection === section.id
+                                            ? "bg-violet-900 dark:bg-violet-400 w-3 h-3"
+                                            : "bg-gray-400 dark:bg-gray-600 group-hover:bg-violet-600 dark:group-hover:bg-violet-500"
+                                    }`}
+                                />
+                                <span
+                                    className={`absolute right-6 whitespace-nowrap text-xs font-medium transition-all duration-300 ${
+                                        activeSection === section.id
+                                            ? "opacity-100 translate-x-0 text-violet-900 dark:text-violet-400"
+                                            : "opacity-0 translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 text-gray-600 dark:text-gray-400"
+                                    }`}
+                                >
+                                    {/* {section.label} */}
+                                </span>
+                            </button>
+                        </li>
+                    ))}
+                </ul>
+            </nav>
 
             {/* ThemeToggle et Menu mobile - Bouton hamburger */}
             <div className="fixed top-8 right-8 z-50 flex items-center gap-3">
@@ -157,19 +166,6 @@ export default function Navigation() {
                                 {section.label}
                             </button>
                         ))}
-                        <button
-                            onClick={() => {
-                                scrollToSection("projet");
-                                setIsMobileMenuOpen(false);
-                            }}
-                            className={`text-2xl font-medium transition-colors ${
-                                activeSection === "projet"
-                                    ? "text-violet-900 dark:text-violet-400"
-                                    : "text-gray-700 dark:text-gray-300 hover:text-violet-900 dark:hover:text-violet-400"
-                            }`}
-                        >
-                            Projets
-                        </button>
                     </nav>
                 </div>
             )}

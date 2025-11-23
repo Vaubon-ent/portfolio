@@ -1,7 +1,7 @@
 [
   {
     "id": 1,
-    "title": "Tickncook: side web app",
+    "title": "Tickncook",
     "description": "Application complémentaire permettant aux restaurateurs de saisir manuellement leurs commandes lorsque leurs caisses ne sont pas compatibles avec TicknCook.",
     "description-plus": "Développement d'une application web complémentaire qui permet aux restaurateurs dont les caisses enregistreuses ne sont pas compatibles avec TicknCook de continuer à utiliser le système. Cette side app reproduit les fonctionnalités essentielles de l'application principale et assure la transmission des commandes au système TicknCook malgré l'absence d'intégration native.",
     "problématique": null,
