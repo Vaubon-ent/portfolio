@@ -40,7 +40,7 @@ export async function POST(request: NextRequest) {
 
     // Envoyer l'email via Resend
     const { data, error } = await resend.emails.send({
-      from: process.env.RESEND_FROM_EMAIL || "Portfolio <onboarding@resend.dev>",
+      from: process.env.SEND_FROM_EMAIL || "Portfolio <onboarding@resend.dev>",
       to: process.env.MY_MAIL || "mrkimbou21972@gmail.com",
       replyTo: email,
       subject: `Nouveau message de contact depuis le portfolio - ${name}`,
