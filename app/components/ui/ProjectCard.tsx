@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
 import type { Project } from "@/app/data/types";
 import { getProjectRoute } from "@/app/utils/projectRoutes";
@@ -9,17 +10,59 @@ interface ProjectCardProps {
 }
 
 export default function ProjectCard({ project }: ProjectCardProps) {
+    // Construire le chemin de l'image : utiliser project.image si disponible,
+    // sinon utiliser la première image du dossier image__file
+    const getImageSrc = () => {
+        // Priorité 1 : utiliser project.image si défini
+        if (project.image) {
+            return project.image;
+        }
+        
+        // Priorité 2 : construire le chemin à partir de image__file
+        // On utilise la première image du dossier (triée alphabétiquement)
+        if (project["image__file"]) {
+            const folder = project["image__file"].startsWith("/") 
+                ? project["image__file"] 
+                : `/${project["image__file"]}`;
+            
+            // Pour chaque projet, on essaie de deviner le nom de la première image
+            // Basé sur les images existantes dans les dossiers
+            const imageMap: Record<string, string> = {
+                "/tnk": "/tnk/tnk.png",
+                "/defi": "/defi/analyse.png", // Première image alphabétiquement
+            };
+            
+            return imageMap[folder] || null;
+        }
+        
+        return null;
+    };
+
+    const [imageError, setImageError] = useState(false);
+    const imageSrc = getImageSrc();
+    const hasImage = imageSrc && !imageError;
+
+    // Déterminer si l'image est un logo (pour utiliser object-contain au lieu de object-cover)
+    const isLogo = imageSrc?.includes("/tnk/tnk.png") || imageSrc?.toLowerCase().includes("logo");
+
     return (
         <div className="min-w-full h-full snap-start flex items-center justify-center px-8 md:px-16 lg:px-24">
             <div className="max-w-5xl w-full mx-auto">
                 <div className="grid md:grid-cols-2 gap-12 items-start">
                     {/* Image ou placeholder */}
-                    <div className="relative aspect-[16/10] bg-gradient-to-br from-violet-900/10 dark:from-violet-400/10 to-violet-600/5 dark:to-violet-500/5 rounded-lg overflow-hidden">
-                        {project.image ? (
+                    <div className={`relative aspect-[16/10] rounded-lg overflow-hidden ${
+                        isLogo 
+                            ? "bg-white dark:bg-gray-900" 
+                            : "bg-gradient-to-br from-violet-900/10 dark:from-violet-400/10 to-violet-600/5 dark:to-violet-500/5"
+                    }`}>
+                        {hasImage ? (
                             <img
-                                src={project.image}
+                                src={imageSrc}
                                 alt={project.title}
-                                className="w-full h-full object-cover"
+                                className={`w-full h-full ${
+                                    isLogo ? "object-contain p-4" : "object-cover"
+                                }`}
+                                onError={() => setImageError(true)}
                             />
                         ) : (
                             <div className="w-full h-full flex items-center justify-center">

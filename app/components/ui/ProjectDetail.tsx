@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
 import type { Project } from "@/app/data/types";
 import ProjectScrollbar from "./ProjectScrollbar";
@@ -10,6 +11,40 @@ interface ProjectDetailProps {
 }
 
 export default function ProjectDetail({ project, images = [] }: ProjectDetailProps) {
+    const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
+    const goToPrevious = useCallback(() => {
+        setCurrentImageIndex((prev) => 
+            prev === 0 ? images.length - 1 : prev - 1
+        );
+    }, [images.length]);
+
+    const goToNext = useCallback(() => {
+        setCurrentImageIndex((prev) => 
+            prev === images.length - 1 ? 0 : prev + 1
+        );
+    }, [images.length]);
+
+    const goToImage = (index: number) => {
+        setCurrentImageIndex(index);
+    };
+
+    // Navigation au clavier
+    useEffect(() => {
+        const handleKeyDown = (e: KeyboardEvent) => {
+            if (images.length === 0) return;
+            
+            if (e.key === "ArrowLeft") {
+                goToPrevious();
+            } else if (e.key === "ArrowRight") {
+                goToNext();
+            }
+        };
+
+        window.addEventListener("keydown", handleKeyDown);
+        return () => window.removeEventListener("keydown", handleKeyDown);
+    }, [images.length, goToPrevious, goToNext]);
+
     return (
         <>
             <ProjectScrollbar />
@@ -80,25 +115,105 @@ export default function ProjectDetail({ project, images = [] }: ProjectDetailPro
                         </div>
                     </div>
 
-                    {/* Galerie d'images */}
+                    {/* Carousel d'images */}
                     {images.length > 0 ? (
                         <div className="mb-12">
                             <h2 className="text-2xl md:text-3xl font-bold mb-6 text-black dark:text-white">
                                 Captures d'écran
                             </h2>
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                {images.map((imagePath, index) => (
-                                    <div
-                                        key={index}
-                                        className="relative aspect-[16/10] bg-gradient-to-br from-violet-900/10 dark:from-violet-400/10 to-violet-600/5 dark:to-violet-500/5 rounded-lg overflow-hidden group cursor-pointer"
-                                    >
-                                        <img
-                                            src={imagePath}
-                                            alt={`${project.title} - Capture ${index + 1}`}
-                                            className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-                                        />
+                            
+                            {/* Conteneur du carousel */}
+                            <div className="relative max-w-4xl mx-auto">
+                                {/* Image principale */}
+                                <div className="relative aspect-[16/10] bg-gradient-to-br from-violet-900/10 dark:from-violet-400/10 to-violet-600/5 dark:to-violet-500/5 rounded-lg overflow-hidden mb-4">
+                                    <div className="relative w-full h-full">
+                                        {images.map((imagePath, index) => (
+                                            <img
+                                                key={index}
+                                                src={imagePath}
+                                                alt={`${project.title} - Capture ${index + 1}`}
+                                                className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-500 ${
+                                                    index === currentImageIndex 
+                                                        ? "opacity-100" 
+                                                        : "opacity-0"
+                                                }`}
+                                            />
+                                        ))}
                                     </div>
-                                ))}
+
+                                    {/* Bouton précédent */}
+                                    {images.length > 1 && (
+                                        <button
+                                            onClick={goToPrevious}
+                                            className="absolute left-4 top-1/2 -translate-y-1/2 z-10 w-12 h-12 flex items-center justify-center bg-white/90 dark:bg-black/90 backdrop-blur-sm rounded-full shadow-lg hover:bg-white dark:hover:bg-black transition-all duration-200 opacity-80 hover:opacity-100 hover:scale-110"
+                                            aria-label="Image précédente"
+                                        >
+                                            <svg
+                                                className="w-6 h-6 text-violet-900 dark:text-violet-400"
+                                                fill="none"
+                                                strokeLinecap="round"
+                                                strokeLinejoin="round"
+                                                strokeWidth="2"
+                                                viewBox="0 0 24 24"
+                                                stroke="currentColor"
+                                            >
+                                                <path d="M15 19l-7-7 7-7"></path>
+                                            </svg>
+                                        </button>
+                                    )}
+
+                                    {/* Bouton suivant */}
+                                    {images.length > 1 && (
+                                        <button
+                                            onClick={goToNext}
+                                            className="absolute right-4 top-1/2 -translate-y-1/2 z-10 w-12 h-12 flex items-center justify-center bg-white/90 dark:bg-black/90 backdrop-blur-sm rounded-full shadow-lg hover:bg-white dark:hover:bg-black transition-all duration-200 opacity-80 hover:opacity-100 hover:scale-110"
+                                            aria-label="Image suivante"
+                                        >
+                                            <svg
+                                                className="w-6 h-6 text-violet-900 dark:text-violet-400"
+                                                fill="none"
+                                                strokeLinecap="round"
+                                                strokeLinejoin="round"
+                                                strokeWidth="2"
+                                                viewBox="0 0 24 24"
+                                                stroke="currentColor"
+                                            >
+                                                <path d="M9 5l7 7-7 7"></path>
+                                            </svg>
+                                        </button>
+                                    )}
+
+                                    {/* Compteur d'images */}
+                                    {images.length > 1 && (
+                                        <div className="absolute bottom-4 right-4 z-10 px-3 py-1.5 bg-black/60 dark:bg-white/60 backdrop-blur-sm rounded-full text-white dark:text-black text-sm font-medium">
+                                            {currentImageIndex + 1} / {images.length}
+                                        </div>
+                                    )}
+                                </div>
+
+                                {/* Indicateurs (miniatures) */}
+                                {images.length > 1 && (
+                                    <div className="flex justify-center gap-2 overflow-x-auto pb-2">
+                                        {images.map((imagePath, index) => (
+                                            <button
+                                                key={index}
+                                                onClick={() => goToImage(index)}
+                                                className={`relative flex-shrink-0 w-20 h-12 rounded-lg overflow-hidden transition-all duration-200 ${
+                                                    index === currentImageIndex
+                                                        ? "ring-2 ring-violet-900 dark:ring-violet-400 scale-105"
+                                                        : "opacity-60 hover:opacity-100"
+                                                }`}
+                                                aria-label={`Aller à l'image ${index + 1}`}
+                                            >
+                                                <img
+                                                    src={imagePath}
+                                                    alt={`Miniature ${index + 1}`}
+                                                    className="w-full h-full object-cover"
+                                                />
+                                            </button>
+                                        ))}
+                                    </div>
+                                )}
                             </div>
                         </div>
                     ) : project.image ? (
