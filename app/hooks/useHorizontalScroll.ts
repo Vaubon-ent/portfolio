@@ -6,8 +6,8 @@ interface UseHorizontalScrollOptions {
 
 interface UseHorizontalScrollReturn {
     currentIndex: number;
-    scrollContainerRef: RefObject<HTMLDivElement>;
-    sectionRef: RefObject<HTMLElement>;
+    scrollContainerRef: RefObject<HTMLDivElement | null>;
+    sectionRef: RefObject<HTMLElement | null>;
     scrollToItem: (index: number) => void;
 }
 
