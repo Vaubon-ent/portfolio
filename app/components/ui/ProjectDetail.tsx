@@ -6,9 +6,10 @@ import ProjectScrollbar from "./ProjectScrollbar";
 
 interface ProjectDetailProps {
     project: Project;
+    images?: string[];
 }
 
-export default function ProjectDetail({ project }: ProjectDetailProps) {
+export default function ProjectDetail({ project, images = [] }: ProjectDetailProps) {
     return (
         <>
             <ProjectScrollbar />
@@ -79,22 +80,44 @@ export default function ProjectDetail({ project }: ProjectDetailProps) {
                         </div>
                     </div>
 
-                    {/* Image ou placeholder */}
-                    <div className="relative max-w-2xl mx-auto aspect-[16/10] bg-gradient-to-br from-violet-900/10 dark:from-violet-400/10 to-violet-600/5 dark:to-violet-500/5 rounded-lg overflow-hidden mb-12">
-                        {project.image ? (
+                    {/* Galerie d'images */}
+                    {images.length > 0 ? (
+                        <div className="mb-12">
+                            <h2 className="text-2xl md:text-3xl font-bold mb-6 text-black dark:text-white">
+                                Captures d'écran
+                            </h2>
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                {images.map((imagePath, index) => (
+                                    <div
+                                        key={index}
+                                        className="relative aspect-[16/10] bg-gradient-to-br from-violet-900/10 dark:from-violet-400/10 to-violet-600/5 dark:to-violet-500/5 rounded-lg overflow-hidden group cursor-pointer"
+                                    >
+                                        <img
+                                            src={imagePath}
+                                            alt={`${project.title} - Capture ${index + 1}`}
+                                            className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                                        />
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    ) : project.image ? (
+                        <div className="relative max-w-2xl mx-auto aspect-[16/10] bg-gradient-to-br from-violet-900/10 dark:from-violet-400/10 to-violet-600/5 dark:to-violet-500/5 rounded-lg overflow-hidden mb-12">
                             <img
                                 src={project.image}
                                 alt={project.title}
                                 className="w-full h-full object-cover"
                             />
-                        ) : (
+                        </div>
+                    ) : (
+                        <div className="relative max-w-2xl mx-auto aspect-[16/10] bg-gradient-to-br from-violet-900/10 dark:from-violet-400/10 to-violet-600/5 dark:to-violet-500/5 rounded-lg overflow-hidden mb-12">
                             <div className="w-full h-full flex items-center justify-center">
                                 <div className="text-6xl opacity-20">
                                     {project.type === "pro" ? "💼" : "💻"}
                                 </div>
                             </div>
-                        )}
-                    </div>
+                        </div>
+                    )}
 
                     {/* Description détaillée */}
                     <div className="mb-12">

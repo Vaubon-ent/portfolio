@@ -6,6 +6,7 @@ export interface Project {
     problématique?: string;
     technologies: string[];
     image?: string | null;
+    "image__file"?: string | null;
     github?: string | null;
     demo?: string | null;
     type: "pro" | "perso";
