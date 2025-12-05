@@ -125,14 +125,14 @@ export default function ProjectDetail({ project, images = [] }: ProjectDetailPro
                             {/* Conteneur du carousel */}
                             <div className="relative max-w-4xl mx-auto">
                                 {/* Image principale */}
-                                <div className="relative aspect-[16/10] bg-gradient-to-br from-violet-900/10 dark:from-violet-400/10 to-violet-600/5 dark:to-violet-500/5 rounded-lg overflow-hidden mb-4">
+                                <div className="relative aspect-[16/10] mb-4">
                                     <div className="relative w-full h-full">
                                         {images.map((imagePath, index) => (
                                             <img
                                                 key={index}
                                                 src={imagePath}
                                                 alt={`${project.title} - Capture ${index + 1}`}
-                                                className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-500 ${
+                                                className={`absolute inset-0 w-full h-full object-contain rounded-lg transition-opacity duration-500 ${
                                                     index === currentImageIndex 
                                                         ? "opacity-100" 
                                                         : "opacity-0"
@@ -208,7 +208,7 @@ export default function ProjectDetail({ project, images = [] }: ProjectDetailPro
                                                 <img
                                                     src={imagePath}
                                                     alt={`Miniature ${index + 1}`}
-                                                    className="w-full h-full object-cover"
+                                                    className="w-full h-full object-contain rounded-lg"
                                                 />
                                             </button>
                                         ))}
@@ -217,16 +217,16 @@ export default function ProjectDetail({ project, images = [] }: ProjectDetailPro
                             </div>
                         </div>
                     ) : project.image ? (
-                        <div className="relative max-w-2xl mx-auto aspect-[16/10] bg-gradient-to-br from-violet-900/10 dark:from-violet-400/10 to-violet-600/5 dark:to-violet-500/5 rounded-lg overflow-hidden mb-12">
+                        <div className="relative max-w-2xl mx-auto aspect-[16/10] mb-12">
                             <img
                                 src={project.image}
                                 alt={project.title}
-                                className="w-full h-full object-cover"
+                                className="w-full h-full object-contain rounded-lg"
                             />
                         </div>
                     ) : (
-                        <div className="relative max-w-2xl mx-auto aspect-[16/10] bg-gradient-to-br from-violet-900/10 dark:from-violet-400/10 to-violet-600/5 dark:to-violet-500/5 rounded-lg overflow-hidden mb-12">
-                            <div className="w-full h-full flex items-center justify-center">
+                        <div className="relative max-w-2xl mx-auto aspect-[16/10] mb-12">
+                            <div className="w-full h-full flex items-center justify-center rounded-lg">
                                 <div className="text-6xl opacity-20">
                                     {project.type === "pro" ? "💼" : "💻"}
                                 </div>

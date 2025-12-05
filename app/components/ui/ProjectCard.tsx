@@ -50,22 +50,16 @@ export default function ProjectCard({ project }: ProjectCardProps) {
             <div className="max-w-5xl w-full mx-auto">
                 <div className="grid md:grid-cols-2 gap-12 items-start">
                     {/* Image ou placeholder */}
-                    <div className={`relative aspect-[16/10] rounded-lg overflow-hidden ${
-                        isLogo 
-                            ? "bg-white dark:bg-gray-900" 
-                            : "bg-gradient-to-br from-violet-900/10 dark:from-violet-400/10 to-violet-600/5 dark:to-violet-500/5"
-                    }`}>
+                    <div className="relative aspect-[16/10]">
                         {hasImage ? (
                             <img
                                 src={imageSrc}
                                 alt={project.title}
-                                className={`w-full h-full ${
-                                    isLogo ? "object-contain p-4" : "object-cover"
-                                }`}
+                                className="w-full h-full object-contain rounded-lg"
                                 onError={() => setImageError(true)}
                             />
                         ) : (
-                            <div className="w-full h-full flex items-center justify-center">
+                            <div className="w-full h-full flex items-center justify-center rounded-lg">
                                 <div className="text-8xl opacity-20">
                                     {project.type === "pro" ? "💼" : "💻"}
                                 </div>
