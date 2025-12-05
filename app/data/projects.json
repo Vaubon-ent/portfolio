@@ -31,20 +31,6 @@
   },
   {
     "id": 3,
-    "title": "API REST dédié LLM Local",
-    "description": "Système d'API modulaire en Python/Flask pour l'inférence de modèles LLM locaux et la recherche augmentée par génération (RAG).",
-    "description-plus": "Plateforme complète d'inférence LLM locale avec système RAG intégré, conçue avec une architecture modulaire en trois couches distinctes : Base API pour la gestion GPU et l'inférence, Overlay API pour la gestion du contexte et la persistance, et RAG API pour l'indexation et la recherche sémantique de documents. Chaque couche a une responsabilité spécifique, permettant une séparation claire des préoccupations et une évolutivité optimale.",
-    "problématique": null,
-    "technologies": ["Python (Flask)", "SQLite", "Pythorch", "Rocm"],
-    "image__file": null,
-    "github": "https://github.com/Vaubon-ent/local-llm",
-    "demo": null,
-    "link": null,
-    "type": "perso",
-    "is_abort": false
-  },
-  {
-    "id": 4,
     "title": "Model MLP on MNIST",
     "description": "Réseau de neurones pour la reconnaissance de chiffres manuscrits (MNIST), inspiré de 3Blue1Brown. Implémentation from scratch avec PyTorch, support multi-GPU et interface graphique PyQt5 pour dessiner et tester.",
     "description-plus": "Réseau de neurones pour la reconnaissance de chiffres manuscrits (MNIST), inspiré des vidéos de 3Blue1Brown. Implémentation from scratch avec PyTorch, sans frameworks de haut niveau.\n\n**Fonctionnalités principales :**\n- Architecture multi-couches (784 → 256 → 128 → 10) avec ReLU et softmax\n- Entraînement avec rétropropagation et descente de gradient\n- Support multi-GPU (2 GPU AMD Vega 64) via threading pour paralléliser les batches\n- Interface graphique PyQt5 pour dessiner des chiffres et obtenir des prédictions en temps réel\n- Gestion du dataset MNIST (60 000 images d'entraînement, 10 000 de test)\n- Sauvegarde et chargement de modèles avec métadonnées (précision, temps d'entraînement, etc.)\n- Optimisations : learning rate adaptatif, batch processing, gestion mémoire GPU/CPU\n\n**Performance :** Le modèle atteint environ 90% de précision après 100 epochs avec l'architecture optimisée.",
