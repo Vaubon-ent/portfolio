@@ -21,7 +21,7 @@ export default function HeroSection() {
                     >
                         Voir mes projets
                     </a> */}
-                    <a
+                    {/* <a
                         href="#contact"
                         onClick={(e) => {
                             e.preventDefault();
@@ -30,7 +30,7 @@ export default function HeroSection() {
                         className="px-6 py-3 border-2 border-violet-900 dark:border-violet-800 text-violet-900 dark:text-violet-400 rounded-lg hover:bg-violet-50 dark:hover:bg-violet-950/30 transition-all duration-200 font-medium"
                     >
                         Me contacter
-                    </a>
+                    </a> */}
                 </div>
             </div>
         </section>

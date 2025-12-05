@@ -8,13 +8,40 @@ export default function Navigation() {
     const [isVisible, setIsVisible] = useState(true);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-    const sections = [
+    // Toutes les sections possibles
+    const allSections = [
         { id: "hero", label: "Accueil" },
         { id: "projet", label: "Projets" },
         { id: "skills", label: "Compétences" },
         { id: "about", label: "À propos" },
         { id: "contact", label: "Contact" },
     ];
+
+    // Filtrer les sections pour ne garder que celles qui existent dans le DOM
+    const getVisibleSections = () => {
+        return allSections.filter(section => {
+            const element = document.getElementById(section.id);
+            return element !== null;
+        });
+    };
+
+    const [sections, setSections] = useState(allSections);
+
+    useEffect(() => {
+        // Mettre à jour la liste des sections visibles au montage et après un délai
+        const updateSections = () => {
+            const visibleSections = getVisibleSections();
+            setSections(visibleSections);
+        };
+
+        // Mise à jour initiale
+        updateSections();
+
+        // Mise à jour après un court délai pour s'assurer que le DOM est complètement chargé
+        const timeoutId = setTimeout(updateSections, 100);
+
+        return () => clearTimeout(timeoutId);
+    }, []);
 
     useEffect(() => {
         const main = document.querySelector("main");

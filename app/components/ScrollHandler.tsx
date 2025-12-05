@@ -12,7 +12,14 @@ export default function ScrollHandler() {
         if (!main) return;
 
         mainRef.current = main as HTMLElement;
-        const sections = ["hero", "projet", "skills", "about", "contact"];
+        
+        // Toutes les sections possibles
+        const allSections = ["hero", "projet", "skills", "about", "contact"];
+        
+        // Filtrer pour ne garder que les sections qui existent dans le DOM
+        const sections = allSections.filter(sectionId => {
+            return document.getElementById(sectionId) !== null;
+        });
 
         const getCurrentSectionIndex = (): number => {
             const scrollPosition = main.scrollTop + main.clientHeight / 2;
